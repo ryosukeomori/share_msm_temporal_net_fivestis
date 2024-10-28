@@ -4,7 +4,6 @@
 #include <limits.h>
 
 #define IPOPN       2000
-#define UP_POPN     10000
 #define DT          0.01923
 #define TS          0
 #define DISCARD     52*10
@@ -33,33 +32,33 @@ int main(){
   double phi_gono_m, phi_gono_f, phi_chla_m, phi_chla_f;
   double tmp20180115, tmp201801152;
   
-  neighm = (char **)malloc(UP_POPN * sizeof(char *));
-  for (cnt = 0; cnt<UP_POPN; cnt++){
-    neighm[cnt] = (char *)malloc(UP_POPN * sizeof(char));
+  neighm = (char **)malloc(IPOPN * sizeof(char *));
+  for (cnt = 0; cnt<IPOPN; cnt++){
+    neighm[cnt] = (char *)malloc(IPOPN * sizeof(char));
   }
-  neighm2 = (char **)malloc(UP_POPN * sizeof(char *));
-  for (cnt = 0; cnt<UP_POPN; cnt++){
-    neighm2[cnt] = (char *)malloc(UP_POPN * sizeof(char));
+  neighm2 = (char **)malloc(IPOPN * sizeof(char *));
+  for (cnt = 0; cnt<IPOPN; cnt++){
+    neighm2[cnt] = (char *)malloc(IPOPN * sizeof(char));
   }
   
-  stHIV	= (char *)malloc((sizeof(char)) * UP_POPN);
-  stHSV	= (char *)malloc((sizeof(char)) * UP_POPN);
-  stgono = (char *)malloc((sizeof(char)) * UP_POPN);
-  stchla = (char *)malloc((sizeof(char)) * UP_POPN);
-  stsyp  = (char *)malloc((sizeof(char)) * UP_POPN);
-  stHIV2 = (char *)malloc((sizeof(char)) * UP_POPN);
-  stHSV2 = (char *)malloc((sizeof(char)) * UP_POPN);
-  stgono2 = (char *)malloc((sizeof(char)) * UP_POPN);
-  stchla2 = (char *)malloc((sizeof(char)) * UP_POPN);
-  stsyp2 = (char *)malloc((sizeof(char)) * UP_POPN);
-  survivem	= (char *)malloc((sizeof(char)) * UP_POPN);
-  mm	= (char *)malloc((sizeof(char)) * UP_POPN);
-  tempm = (int *)malloc((sizeof(int)) * UP_POPN);
-  agem = (double *)malloc((sizeof(double)) * UP_POPN);
-  probacq	= (double *)malloc((sizeof(double)) * UP_POPN);
-  cas_degree	= (int *)malloc((sizeof(int)) * UP_POPN);
-  newedge	= (int *)malloc((sizeof(int)) * UP_POPN);
-  nposclu	= (double *)malloc((sizeof(double)) * UP_POPN);
+  stHIV	= (char *)malloc((sizeof(char)) * IPOPN);
+  stHSV	= (char *)malloc((sizeof(char)) * IPOPN);
+  stgono = (char *)malloc((sizeof(char)) * IPOPN);
+  stchla = (char *)malloc((sizeof(char)) * IPOPN);
+  stsyp  = (char *)malloc((sizeof(char)) * IPOPN);
+  stHIV2 = (char *)malloc((sizeof(char)) * IPOPN);
+  stHSV2 = (char *)malloc((sizeof(char)) * IPOPN);
+  stgono2 = (char *)malloc((sizeof(char)) * IPOPN);
+  stchla2 = (char *)malloc((sizeof(char)) * IPOPN);
+  stsyp2 = (char *)malloc((sizeof(char)) * IPOPN);
+  survivem	= (char *)malloc((sizeof(char)) * IPOPN);
+  mm	= (char *)malloc((sizeof(char)) * IPOPN);
+  tempm = (int *)malloc((sizeof(int)) * IPOPN);
+  agem = (double *)malloc((sizeof(double)) * IPOPN);
+  probacq	= (double *)malloc((sizeof(double)) * IPOPN);
+  cas_degree	= (int *)malloc((sizeof(int)) * IPOPN);
+  newedge	= (int *)malloc((sizeof(int)) * IPOPN);
+  nposclu	= (double *)malloc((sizeof(double)) * IPOPN);
   agen = 100;
   marriage_acq = 0.07*DT;
   marriage_div = 1.0/5.0*DT;
@@ -163,12 +162,12 @@ int main(){
   probcoit_HSV[2] = 11.0 * 365.0 / 30.0*DT;
   probcoit_HSV[3] = 11.0 * 365.0 / 30.0*DT;
   
-  for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+  for (popcnt = 0; popcnt < IPOPN; popcnt++){
     survivem[popcnt] = 0;
     mm[popcnt] = 0;
     agem[popcnt] = 0.0;
     cas_degree[popcnt] = 0;
-    for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+    for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
       neighm[popcnt][popcnt2] = 0;
       neighm[popcnt2][popcnt] = 0;
       neighm2[popcnt][popcnt2] = 0;
@@ -246,10 +245,10 @@ int main(){
     
   for (t = TS; t < TE; t++){
     
-    for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+    for (popcnt = 0; popcnt < IPOPN; popcnt++){
       if (survivem[popcnt] == 1){
         ndcdnm = 0.0;
-        for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+        for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
           if (survivem[popcnt2] == 1){
             ndcdnm += (double)(neighm[popcnt][popcnt2]);
           }
@@ -264,7 +263,7 @@ int main(){
     popn2 = 0;
     bab_cnt = 0;
     totalnewedge=0;
-    for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+    for (popcnt = 0; popcnt < IPOPN; popcnt++){
       newedge[popcnt] = 0;
       if (survivem[popcnt] == 1){
         popn++;
@@ -284,7 +283,7 @@ int main(){
     while (remainedge > 1){
       denom = (double)(totalnewedge);
       cur_newedge = 0.0;
-      for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+      for (popcnt = 0; popcnt < IPOPN; popcnt++){
         if(survivem[popcnt] == 1 &&agem[popcnt] > 15.0 &&agem[popcnt] < 65.0 && newedge[popcnt]>0){
           cur_newedge += (double)(newedge[popcnt])/denom;
           if(Uniform() <= cur_newedge){
@@ -297,10 +296,10 @@ int main(){
       newedge1 = lastm;
       firstend:;
       denom = 0.0;
-      for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+      for (popcnt = 0; popcnt < IPOPN; popcnt++){
         if(survivem[popcnt] == 1 &&agem[popcnt] > 15.0 &&agem[popcnt] < 65.0 && popcnt != newedge1 && newedge[popcnt]>0){
           nposclu[popcnt] = 0.0;
-          for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+          for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
             if(survivem[popcnt2] == 1 &&agem[popcnt2] > 15.0 &&agem[popcnt2] < 65.0 && popcnt2 != newedge1 && popcnt != popcnt2 && newedge[popcnt2]>0 && (neighm[newedge1][popcnt2]+neighm2[newedge1][popcnt2])>0&& (neighm[popcnt][popcnt2]+neighm2[popcnt][popcnt2])>0){
               nposclu[popcnt] += 1.0;
             }
@@ -309,7 +308,7 @@ int main(){
         }
       }
       cur_newedge = 0.0;
-      for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+      for (popcnt = 0; popcnt < IPOPN; popcnt++){
         if(survivem[popcnt] == 1 &&agem[popcnt] > 15.0 &&agem[popcnt] < 65.0 && popcnt != newedge1 && newedge[popcnt]>0){
           cur_newedge += (double)(newedge[popcnt])*pow((fabs((double)(cas_degree[popcnt]-cas_degree[newedge1]))+1.0),beki)*pow(((double)(nposclu[popcnt])+1.0),beki2)/denom;
           if(Uniform() <= cur_newedge){
@@ -330,9 +329,9 @@ int main(){
       remainedge -= 2;
     }
     
-    for (popcnt = 0; popcnt < UP_POPN - 1; popcnt++){
+    for (popcnt = 0; popcnt < IPOPN - 1; popcnt++){
       if (survivem[popcnt] == 1){
-        for (popcnt2 = popcnt + 1; popcnt2 < UP_POPN; popcnt2++){
+        for (popcnt2 = popcnt + 1; popcnt2 < IPOPN; popcnt2++){
           if (survivem[popcnt2] == 1){
             if (neighm[popcnt][popcnt2] == 1 || neighm[popcnt2][popcnt] == 1){
               if (Uniform() < removelink){
@@ -345,9 +344,9 @@ int main(){
       }
     }
     
-    for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+    for (popcnt = 0; popcnt < IPOPN; popcnt++){
       if(survivem[popcnt] == 1 && mm[popcnt] == 0 && agem[popcnt] >= 15.0){
-        for (popcnt5 = 0; popcnt5 < UP_POPN; popcnt5++){
+        for (popcnt5 = 0; popcnt5 < IPOPN; popcnt5++){
           if (popcnt != popcnt5 && survivem[popcnt5] == 1 && mm[popcnt5] == 0 && agem[popcnt5] >= 15.0){
             if(Uniform()<(marriage_acq)){
               neighm2[popcnt][popcnt5] = 1;
@@ -365,13 +364,13 @@ int main(){
       }
     }
     
-    for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+    for (popcnt = 0; popcnt < IPOPN; popcnt++){
       if(survivem[popcnt] == 1 && mm[popcnt] == 1){
         if(Uniform()<(marriage_div/2.0)){
           mm[popcnt]  = 0;
           tempd = rand_gamma(gam1, gam2);
           probacq[popcnt] = 2.0*tempd/(1.0/removelink+1.0/DT);
-          for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+          for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
             if(neighm2[popcnt][popcnt2] == 1){
               mm[popcnt2]  = 0;
               tempd = rand_gamma(gam1, gam2);
@@ -384,13 +383,13 @@ int main(){
       }
     }
     
-    for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+    for (popcnt = 0; popcnt < IPOPN; popcnt++){
       if (survivem[popcnt] == 1){
         if (floor(agem[popcnt]) < 100.0){
           if (Uniform() < mu[(int)(floor(agem[popcnt]))]){
             if(mm[popcnt]==1){
               mm[popcnt] = 0;
-              for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+              for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
                 if(neighm2[popcnt][popcnt2] == 1){
                   mm[popcnt2]  = 0;
                   tempd = rand_gamma(gam1, gam2);
@@ -414,7 +413,7 @@ int main(){
             probacq[popcnt] = 2.0*tempd/(1.0/removelink+1.0/DT);
             agem[popcnt] = 0.0;
             cas_degree[popcnt] =0;
-            for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+            for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
               if(neighm[popcnt][popcnt2]==1){
                 neighm[popcnt][popcnt2] = 0;
                 neighm[popcnt2][popcnt] = 0;
@@ -432,7 +431,7 @@ int main(){
             survivem[popcnt] = 0;
             if(mm[popcnt]==1){
               mm[popcnt] = 0;
-              for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+              for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
                 if(neighm2[popcnt][popcnt2] == 1){
                   mm[popcnt2]  = 0;
                   tempd = rand_gamma(gam1, gam2);
@@ -456,7 +455,7 @@ int main(){
             probacq[popcnt] = 2.0*tempd/(1.0/removelink+1.0/DT);
             agem[popcnt] = 0.0;
             cas_degree[popcnt] =0;
-            for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+            for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
               if(neighm[popcnt][popcnt2]==1){
                 neighm[popcnt][popcnt2] = 0;
                 neighm[popcnt2][popcnt] = 0;
@@ -476,7 +475,7 @@ int main(){
       
       activ_p = 0;
       while(activ_p < 10){
-        popcnt2 = (int)(Uniform()*(double)(UP_POPN));
+        popcnt2 = (int)(Uniform()*(double)(IPOPN));
         if (survivem[popcnt2] == 1 && agem[popcnt2]>15.0 && agem[popcnt2]<65.0){
           stHIV[popcnt2] = 1;
           activ_p++;
@@ -484,7 +483,7 @@ int main(){
       }
       activ_p = 0;
       while(activ_p < 10){
-        popcnt2 = (int)(Uniform()*(double)(UP_POPN));
+        popcnt2 = (int)(Uniform()*(double)(IPOPN));
         if (survivem[popcnt2] == 1 && agem[popcnt2]>15.0 && agem[popcnt2]<65.0){
           stHSV[popcnt2] = 1;
           activ_p++;
@@ -492,7 +491,7 @@ int main(){
       }
       activ_p = 0;
       while(activ_p < 10){
-        popcnt2 = (int)(Uniform()*(double)(UP_POPN));
+        popcnt2 = (int)(Uniform()*(double)(IPOPN));
         if (survivem[popcnt2] == 1 && agem[popcnt2]>15.0 && agem[popcnt2]<65.0){
           stgono[popcnt2] = 2;
           activ_p++;
@@ -500,7 +499,7 @@ int main(){
       }
       activ_p = 0;
       while(activ_p < 10){
-        popcnt2 = (int)(Uniform()*(double)(UP_POPN));
+        popcnt2 = (int)(Uniform()*(double)(IPOPN));
         if (survivem[popcnt2] == 1 && agem[popcnt2]>15.0 && agem[popcnt2]<65.0){
           stchla[popcnt2] = 2;
           activ_p++;
@@ -508,7 +507,7 @@ int main(){
       }
       activ_p = 0;
       while(activ_p < 10){
-        popcnt2 = (int)(Uniform()*(double)(UP_POPN));
+        popcnt2 = (int)(Uniform()*(double)(IPOPN));
         if (survivem[popcnt2] == 1 && agem[popcnt2]>15.0 && agem[popcnt2]<65.0){
           stsyp[popcnt2] = 1;
           activ_p++;
@@ -560,9 +559,9 @@ int main(){
     }
     
     if (t > DISCARD){
-      for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+      for (popcnt = 0; popcnt < IPOPN; popcnt++){
         if (survivem[popcnt] == 1 && agem[popcnt]>15.0 && agem[popcnt]<65.0){
-          for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+          for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
             if (survivem[popcnt2] == 1 && agem[popcnt2]>15.0 && agem[popcnt2] < 65.0){
               if (neighm[popcnt][popcnt2] == 1 || neighm2[popcnt][popcnt2] == 1){
                 tempd = minf(minf(minf(probcoit_HIV[stHIV[popcnt]], probcoit_HIV[stHIV[popcnt2]]), probcoit_HSV[stHSV[popcnt]]), probcoit_HSV[stHSV[popcnt2]])*(probcoit_age[(int)(floor(agem[popcnt]-15.0))]+probcoit_age[(int)(floor(agem[popcnt2]-15.0))])/2.0;
@@ -614,7 +613,7 @@ int main(){
         }
       }
       
-      for (popcnt = 0; popcnt < UP_POPN; popcnt++){
+      for (popcnt = 0; popcnt < IPOPN; popcnt++){
         if (survivem[popcnt] == 1){
           tmp201801152 = stHIV[popcnt];
           if (stHIV[popcnt] == 1){
@@ -641,13 +640,13 @@ int main(){
               tempd = rand_gamma(gam1, gam2);
               probacq[popcnt] = 2.0*tempd/(1.0/removelink+1.0/DT);
               cas_degree[popcnt] =0;
-              for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+              for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
                 neighm[popcnt][popcnt2] = 0;
                 neighm[popcnt2][popcnt] = 0;
               }
               if(mm[popcnt]==1){
                 mm[popcnt] = 0;
-                for (popcnt2 = 0; popcnt2 < UP_POPN; popcnt2++){
+                for (popcnt2 = 0; popcnt2 < IPOPN; popcnt2++){
                   if(neighm2[popcnt][popcnt2] == 1){
                     mm[popcnt2]  = 0;
                     tempd = rand_gamma(gam1, gam2);
